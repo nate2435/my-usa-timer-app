@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>US Timezones - Analog Clocks, Stopwatch & Timer</title>
+  <style>
+    /* Global Styles */
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      color: #333;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h1, h2 {
+      text-align: center;
+      margin-bottom: 15px;
+    }
+    .section {
+      background-color: #fff;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    /* ANALOG CLOCK STYLES */
+    .clocks-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 20px;
+      justify-items: center;
+      margin: 20px 0;
+    }
+    .clock-container {
+      text-align: center;
+    }
+    .clock-label {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .clock {
+      position: relative;
+      width: 130px;
+      height: 130px;
+      border: 8px solid #333;
+      border-radius: 50%;
+      background-color: #fff;
+    }
+    /* The clock "hand" elements */
+    .hand {
+      position: absolute;
+      background-color: #333;
+      top: 50%;
+      left: 50%;
+      transform-origin: 100%;
+      transform: translate(-50%, -100%) rotate(0deg);
+    }
+    .hour {
+      width: 35%;
+      height: 4px;
+      border-radius: 2px;
+    }
+    .minute {
+      width: 45%;
+      height: 3px;
+      border-radius: 2px;
+    }
+    .second {
+      width: 48%;
+      height: 2px;
+      background-color: #e00; /* Red second hand */
+    }
+
+    /* STOPWATCH & TIMER DISPLAYS */
+    #stopwatchDisplay, #countdownDisplay {
+      font-size: 2em;
+      text-align: center;
+      margin: 10px 0;
+      letter-spacing: 1px;
+    }
+    .controls {
+      text-align: center;
+      margin-top: 10px;
+    }
+    button {
+      padding: 10px 20px;
+      margin: 5px;
+      border: none;
+      border-radius: 4px;
+      background-color: #007bff;
+      color: #fff;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.1s ease;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    button:active {
+      transform: scale(0.98);
+    }
+
+    /* COUNTDOWN INPUTS */
+    .countdown-inputs {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .countdown-inputs input {
+      width: 100px;
+      padding: 10px;
+      margin: 5px;
+      font-size: 1em;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      text-align: center;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 600px) {
+      .clock {
+        width: 110px;
+        height: 110px;
+      }
+      .hour {
+        width: 32%;
+      }
+      .minute {
+        width: 42%;
+      }
+      .second {
+        width: 45%;
+      }
+      button {
+        font-size: 0.9em;
+        padding: 8px 16px;
+      }
+      #stopwatchDisplay, #countdownDisplay {
+        font-size: 1.5em;
+      }
+      .countdown-inputs input {
+        width: 80px;
+        padding: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>U.S. Analog Clocks, Stopwatch & Timer</h1>
+
+    <!-- ANALOG CLOCKS SECTION -->
+    <div class="section">
+      <h2>Analog Clocks (U.S. Time Zones)</h2>
+      <div class="clocks-grid">
+        <!-- Eastern -->
+        <div class="clock-container">
+          <div class="clock-label">Eastern (New York)</div>
+          <div class="clock" id="clock-eastern">
+            <div class="hand hour" id="hour-eastern"></div>
+            <div class="hand minute" id="minute-eastern"></div>
+            <div class="hand second" id="second-eastern"></div>
+          </div>
+        </div>
+        <!-- Central -->
+        <div class="clock-container">
+          <div class="clock-label">Central (Chicago)</div>
+          <div class="clock" id="clock-central">
+            <div class="hand hour" id="hour-central"></div>
+            <div class="hand minute" id="minute-central"></div>
+            <div class="hand second" id="second-central"></div>
+          </div>
+        </div>
+        <!-- Mountain -->
+        <div class="clock-container">
+          <div class="clock-label">Mountain (Denver)</div>
+          <div class="clock" id="clock-mountain">
+            <div class="hand hour" id="hour-mountain"></div>
+            <div class="hand minute" id="minute-mountain"></div>
+            <div class="hand second" id="second-mountain"></div>
+          </div>
+        </div>
+        <!-- Pacific -->
+        <div class="clock-container">
+          <div class="clock-label">Pacific (Los Angeles)</div>
+          <div class="clock" id="clock-pacific">
+            <div class="hand hour" id="hour-pacific"></div>
+            <div class="hand minute" id="minute-pacific"></div>
+            <div class="hand second" id="second-pacific"></div>
+          </div>
+        </div>
+        <!-- Alaska -->
+        <div class="clock-container">
+          <div class="clock-label">Alaska (Anchorage)</div>
+          <div class="clock" id="clock-alaska">
+            <div class="hand hour" id="hour-alaska"></div>
+            <div class="hand minute" id="minute-alaska"></div>
+            <div class="hand second" id="second-alaska"></div>
+          </div>
+        </div>
+        <!-- Hawaii -->
+        <div class="clock-container">
+          <div class="clock-label">Hawaii (Honolulu)</div>
+          <div class="clock" id="clock-hawaii">
+            <div class="hand hour" id="hour-hawaii"></div>
+            <div class="hand minute" id="minute-hawaii"></div>
+            <div class="hand second" id="second-hawaii"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STOPWATCH SECTION -->
+    <div class="section">
+      <h2>Stopwatch</h2>
+      <div id="stopwatchDisplay">00:00:00</div>
+      <div class="controls">
+        <button id="startStopwatch">Start</button>
+        <button id="pauseStopwatch">Pause</button>
+        <button id="resetStopwatch">Reset</button>
+      </div>
+    </div>
+
+    <!-- COUNTDOWN TIMER SECTION -->
+    <div class="section">
+      <h2>Countdown Timer</h2>
+      <div class="countdown-inputs">
+        <input type="number" id="countdownMinutes" placeholder="Minutes" min="0"/>
+        <input type="number" id="countdownSeconds" placeholder="Seconds" min="0" max="59"/>
+      </div>
+      <div id="countdownDisplay">00:00</div>
+      <div class="controls">
+        <button id="startCountdown">Start</button>
+        <button id="pauseCountdown">Pause</button>
+        <button id="resetCountdown">Reset</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* ========================================
+       ANALOG CLOCKS FOR US TIME ZONES
+       ======================================== */
+
+    // List of time zones with matching element IDs
+    const clocks = [
+      {
+        timeZone: "America/New_York",
+        hourHandId: "hour-eastern",
+        minuteHandId: "minute-eastern",
+        secondHandId: "second-eastern",
+      },
+      {
+        timeZone: "America/Chicago",
+        hourHandId: "hour-central",
+        minuteHandId: "minute-central",
+        secondHandId: "second-central",
+      },
+      {
+        timeZone: "America/Denver",
+        hourHandId: "hour-mountain",
+        minuteHandId: "minute-mountain",
+        secondHandId: "second-mountain",
+      },
+      {
+        timeZone: "America/Los_Angeles",
+        hourHandId: "hour-pacific",
+        minuteHandId: "minute-pacific",
+        secondHandId: "second-pacific",
+      },
+      {
+        timeZone: "America/Anchorage",
+        hourHandId: "hour-alaska",
+        minuteHandId: "minute-alaska",
+        secondHandId: "second-alaska",
+      },
+      {
+        timeZone: "Pacific/Honolulu",
+        hourHandId: "hour-hawaii",
+        minuteHandId: "minute-hawaii",
+        secondHandId: "second-hawaii",
+      },
+    ];
+
+    function updateAnalogClocks() {
+      const now = new Date();
+
+      clocks.forEach(({ timeZone, hourHandId, minuteHandId, secondHandId }) => {
+        // Create a date object in the specified time zone
+        // We parse the localized string to get a Date in that zone.
+        const localString = now.toLocaleString("en-US", { timeZone });
+        const localDate = new Date(localString);
+
+        const hours = localDate.getHours();
+        const minutes = localDate.getMinutes();
+        const seconds = localDate.getSeconds();
+
+        // Calculate angles
+        // Each hour is 30 deg (360 deg / 12)
+        // Each minute is 6 deg (360 deg / 60)
+        // Each second is 6 deg (360 deg / 60)
+        // The hour hand also moves a bit each minute (0.5 deg per minute)
+        const hourAngle = (hours % 12) * 30 + minutes * 0.5;
+        const minuteAngle = minutes * 6;
+        const secondAngle = seconds * 6;
+
+        // Update the transforms
+        document.getElementById(hourHandId).style.transform =
+          `translate(-50%, -100%) rotate(${hourAngle}deg)`;
+        document.getElementById(minuteHandId).style.transform =
+          `translate(-50%, -100%) rotate(${minuteAngle}deg)`;
+        document.getElementById(secondHandId).style.transform =
+          `translate(-50%, -100%) rotate(${secondAngle}deg)`;
+      });
+    }
+
+    // Update clocks once, then every second
+    updateAnalogClocks();
+    setInterval(updateAnalogClocks, 1000);
+
+    /* ========================================
+       STOPWATCH FUNCTIONALITY
+       ======================================== */
+    let stopwatchInterval;
+    let stopwatchStartTime = 0; // Timestamp when stopwatch started
+    let stopwatchElapsed = 0;   // Elapsed time in ms before last pause
+    let stopwatchRunning = false;
+
+    function updateStopwatch() {
+      const elapsedTime = Date.now() - stopwatchStartTime + stopwatchElapsed;
+      const minutes = Math.floor(elapsedTime / 60000);
+      const seconds = Math.floor((elapsedTime % 60000) / 1000);
+      const milliseconds = Math.floor((elapsedTime % 1000) / 10);
+
+      const mStr = minutes < 10 ? "0" + minutes : minutes;
+      const sStr = seconds < 10 ? "0" + seconds : seconds;
+      const msStr = milliseconds < 10 ? "0" + milliseconds : milliseconds;
+
+      document.getElementById("stopwatchDisplay").innerText = `${mStr}:${sStr}:${msStr}`;
+    }
+
+    document.getElementById("startStopwatch").addEventListener("click", () => {
+      if (!stopwatchRunning) {
+        stopwatchStartTime = Date.now();
+        stopwatchInterval = setInterval(updateStopwatch, 10);
+        stopwatchRunning = true;
+      }
+    });
+
+    document.getElementById("pauseStopwatch").addEventListener("click", () => {
+      if (stopwatchRunning) {
+        clearInterval(stopwatchInterval);
+        stopwatchElapsed += Date.now() - stopwatchStartTime;
+        stopwatchRunning = false;
+      }
+    });
+
+    document.getElementById("resetStopwatch").addEventListener("click", () => {
+      clearInterval(stopwatchInterval);
+      stopwatchStartTime = 0;
+      stopwatchElapsed = 0;
+      stopwatchRunning = false;
+      document.getElementById("stopwatchDisplay").innerText = "00:00:00";
+    });
+
+    /* ========================================
+       COUNTDOWN TIMER FUNCTIONALITY
+       ======================================== */
+    let countdownInterval;
+    let countdownTimeLeft = 0; // in seconds
+    let countdownRunning = false;
+
+    function updateCountdownDisplay() {
+      const minutes = Math.floor(countdownTimeLeft / 60);
+      const seconds = countdownTimeLeft % 60;
+      const mStr = minutes < 10 ? "0" + minutes : minutes;
+      const sStr = seconds < 10 ? "0" + seconds : seconds;
+      document.getElementById("countdownDisplay").innerText = `${mStr}:${sStr}`;
+    }
+
+    document.getElementById("startCountdown").addEventListener("click", () => {
+      if (!countdownRunning) {
+        if (countdownTimeLeft <= 0) {
+          const minutesInput = parseInt(document.getElementById("countdownMinutes").value) || 0;
+          const secondsInput = parseInt(document.getElementById("countdownSeconds").value) || 0;
+          countdownTimeLeft = minutesInput * 60 + secondsInput;
+        }
+        if (countdownTimeLeft <= 0) {
+          return;
+        }
+        countdownInterval = setInterval(() => {
+          if (countdownTimeLeft > 0) {
+            countdownTimeLeft--;
+            updateCountdownDisplay();
+          } else {
+            clearInterval(countdownInterval);
+            countdownRunning = false;
+            alert("Time's up!");
+          }
+        }, 1000);
+        countdownRunning = true;
+      }
+    });
+
+    document.getElementById("pauseCountdown").addEventListener("click", () => {
+      if (countdownRunning) {
+        clearInterval(countdownInterval);
+        countdownRunning = false;
+      }
+    });
+
+    document.getElementById("resetCountdown").addEventListener("click", () => {
+      clearInterval(countdownInterval);
+      countdownRunning = false;
+      countdownTimeLeft = 0;
+      updateCountdownDisplay();
+      document.getElementById("countdownMinutes").value = "";
+      document.getElementById("countdownSeconds").value = "";
+    });
+  </script>
+</body>
+</html>

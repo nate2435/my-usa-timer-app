@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Responsive Time Application</title>
+  <style>
+    /* Global Styles */
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      color: #333;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h1, h2 {
+      text-align: center;
+    }
+    /* Section Card Styles */
+    .section {
+      background-color: #fff;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    /* Display Styles */
+    .clock-display,
+    #stopwatchDisplay,
+    #countdownDisplay {
+      font-size: 1.5em;
+      text-align: center;
+      margin: 10px 0;
+      letter-spacing: 1px;
+    }
+    /* Button Styles */
+    button {
+      padding: 10px 20px;
+      margin: 5px;
+      border: none;
+      border-radius: 4px;
+      background-color: #007bff;
+      color: #fff;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.1s ease;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    button:active {
+      transform: scale(0.98);
+    }
+    /* Input Styles for Countdown */
+    .countdown-inputs {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .countdown-inputs input {
+      width: 100px;
+      padding: 10px;
+      margin: 5px;
+      font-size: 1em;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      text-align: center;
+    }
+    /* Responsive adjustments */
+    @media (max-width: 600px) {
+      .clock-display,
+      #stopwatchDisplay,
+      #countdownDisplay {
+        font-size: 1.2em;
+      }
+      button {
+        font-size: 0.9em;
+        padding: 8px 16px;
+      }
+      .countdown-inputs input {
+        width: 80px;
+        padding: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Responsive Time Application</h1>
+
+    <!-- Live Digital Clocks Section -->
+    <div class="section clock-section">
+      <h2>Live Digital Clocks</h2>
+      <!-- U.S. Time Zones -->
+      <div id="easternClock" class="clock-display">Eastern (New York): 00:00:00 AM</div>
+      <div id="centralClock" class="clock-display">Central (Chicago): 00:00:00 AM</div>
+      <div id="mountainClock" class="clock-display">Mountain (Denver): 00:00:00 AM</div>
+      <div id="pacificClock" class="clock-display">Pacific (Los Angeles): 00:00:00 AM</div>
+      <div id="alaskaClock" class="clock-display">Alaska (Anchorage): 00:00:00 AM</div>
+      <div id="hawaiiClock" class="clock-display">Hawaii (Honolulu): 00:00:00 AM</div>
+      <!-- International Time Zones -->
+      <div id="londonClock" class="clock-display">London: 00:00:00</div>
+      <div id="tokyoClock" class="clock-display">Tokyo: 00:00:00 AM</div>
+      <div id="hongkongClock" class="clock-display">Hong Kong: 00:00:00 AM</div>
+      <div id="dubaiClock" class="clock-display">Dubai: 00:00:00 AM</div>
+    </div>
+
+    <!-- Stopwatch Section -->
+    <div class="section stopwatch-section">
+      <h2>Stopwatch</h2>
+      <div id="stopwatchDisplay">00:00:00</div>
+      <div class="stopwatch-controls" style="text-align: center;">
+        <button id="startStopwatch">Start</button>
+        <button id="pauseStopwatch">Pause</button>
+        <button id="resetStopwatch">Reset</button>
+      </div>
+    </div>
+
+    <!-- Countdown Timer Section -->
+    <div class="section countdown-section">
+      <h2>Countdown Timer</h2>
+      <div class="countdown-inputs">
+        <input type="number" id="countdownMinutes" placeholder="Minutes" min="0" />
+        <input type="number" id="countdownSeconds" placeholder="Seconds" min="0" max="59" />
+      </div>
+      <div id="countdownDisplay">00:00</div>
+      <div class="countdown-controls" style="text-align: center;">
+        <button id="startCountdown">Start</button>
+        <button id="pauseCountdown">Pause</button>
+        <button id="resetCountdown">Reset</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* ================================
+       Live Digital Clocks Functionality
+       ================================ */
+    function updateClocks() {
+      const now = new Date();
+
+      // USA Time Zones
+      document.getElementById("easternClock").innerText =
+        "Eastern (New York): " +
+        now.toLocaleTimeString("en-US", {
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+          hour12: true,
+          timeZone: "America/New_York"
+        });
+
+      document.getElementById("centralClock").innerText =
+        "Central (Chicago): " +
+        now.toLocaleTimeString("en-US", {
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+          hour12: true,
+          timeZone: "America/Chicago"
+        });
+
+      document.getElementById("mountainClock").innerText =
+        "Mountain (Denver): " +
+        now.toLocaleTimeString("en-US", {
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+          hour12: true,
+          timeZone: "America/Denver"
+        });
+
+      document.getElementById("pacificClock").innerText =
+        "Pacific (Los Angeles): " +
+        now.toLocaleTimeString("en-US", {
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+          hour12: true,
+          timeZone: "America/Los_Angeles"
+        });
+
+      document.getElementById("alaskaClock").innerText =
+        "Alaska (Anchorage): " +
+        now.toLocaleTimeString("en-US", {
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+          hour12: true,
+          timeZone: "America/Anchorage"
+        });
+
+      document.getElementById("hawaiiClock").innerText =
+        "Hawaii (Honolulu): " +
+        now.toLocaleTimeString("en-US", {
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+          hour12: true,
+          timeZone: "Pacific/Honolulu"
+        });
+
+      // International Time Zones
+      document.getElementById("londonClock").innerText =
+        "London: " +
+        now.toLocaleTimeString("en-GB", {
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+          hour12: false,
+          timeZone: "Europe/London"
+        });
+
+      document.getElementById("tokyoClock").innerText =
+        "Tokyo: " +
+        now.toLocaleTimeString("en-US", {
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+          hour12: true,
+          timeZone: "Asia/Tokyo"
+        });
+
+      document.getElementById("hongkongClock").innerText =
+        "Hong Kong: " +
+        now.toLocaleTimeString("en-US", {
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+          hour12: true,
+          timeZone: "Asia/Hong_Kong"
+        });
+
+      document.getElementById("dubaiClock").innerText =
+        "Dubai: " +
+        now.toLocaleTimeString("en-US", {
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+          hour12: true,
+          timeZone: "Asia/Dubai"
+        });
+    }
+    // Update clocks immediately and then every second
+    updateClocks();
+    setInterval(updateClocks, 1000);
+
+    /* ================================
+       Stopwatch Functionality
+       ================================ */
+    let stopwatchInterval;
+    let stopwatchStartTime = 0; // Timestamp when stopwatch was started
+    let stopwatchElapsed = 0; // Time elapsed before the last pause (in ms)
+    let stopwatchRunning = false;
+
+    function updateStopwatch() {
+      // Calculate total elapsed time
+      const elapsedTime = Date.now() - stopwatchStartTime + stopwatchElapsed;
+      const minutes = Math.floor(elapsedTime / 60000);
+      const seconds = Math.floor((elapsedTime % 60000) / 1000);
+      // Hundredths of a second
+      const milliseconds = Math.floor((elapsedTime % 1000) / 10);
+      // Format values with leading zeros
+      const mStr = minutes < 10 ? "0" + minutes : minutes;
+      const sStr = seconds < 10 ? "0" + seconds : seconds;
+      const msStr = milliseconds < 10 ? "0" + milliseconds : milliseconds;
+      document.getElementById("stopwatchDisplay").innerText = `${mStr}:${sStr}:${msStr}`;
+    }
+
+    document.getElementById("startStopwatch").addEventListener("click", function () {
+      if (!stopwatchRunning) {
+        stopwatchStartTime = Date.now();
+        stopwatchInterval = setInterval(updateStopwatch, 10);
+        stopwatchRunning = true;
+      }
+    });
+
+    document.getElementById("pauseStopwatch").addEventListener("click", function () {
+      if (stopwatchRunning) {
+        clearInterval(stopwatchInterval);
+        stopwatchElapsed += Date.now() - stopwatchStartTime;
+        stopwatchRunning = false;
+      }
+    });
+
+    document.getElementById("resetStopwatch").addEventListener("click", function () {
+      clearInterval(stopwatchInterval);
+      stopwatchStartTime = 0;
+      stopwatchElapsed = 0;
+      stopwatchRunning = false;
+      document.getElementById("stopwatchDisplay").innerText = "00:00:00";
+    });
+
+    /* ================================
+       Countdown Timer Functionality
+       ================================ */
+    let countdownInterval;
+    let countdownTimeLeft = 0; // Remaining time in seconds
+    let countdownRunning = false;
+
+    function updateCountdownDisplay() {
+      const minutes = Math.floor(countdownTimeLeft / 60);
+      const seconds = countdownTimeLeft % 60;
+      const mStr = minutes < 10 ? "0" + minutes : minutes;
+      const sStr = seconds < 10 ? "0" + seconds : seconds;
+      document.getElementById("countdownDisplay").innerText = `${mStr}:${sStr}`;
+    }
+
+    document.getElementById("startCountdown").addEventListener("click", function () {
+      if (!countdownRunning) {
+        if (countdownTimeLeft <= 0) {
+          const minutesInput = parseInt(document.getElementById("countdownMinutes").value) || 0;
+          const secondsInput = parseInt(document.getElementById("countdownSeconds").value) || 0;
+          countdownTimeLeft = minutesInput * 60 + secondsInput;
+        }
+        if (countdownTimeLeft <= 0) {
+          return;
+        }
+        countdownInterval = setInterval(function () {
+          if (countdownTimeLeft > 0) {
+            countdownTimeLeft--;
+            updateCountdownDisplay();
+          } else {
+            clearInterval(countdownInterval);
+            countdownRunning = false;
+            alert("Time's up!");
+          }
+        }, 1000);
+        countdownRunning = true;
+      }
+    });
+
+    document.getElementById("pauseCountdown").addEventListener("click", function () {
+      if (countdownRunning) {
+        clearInterval(countdownInterval);
+        countdownRunning = false;
+      }
+    });
+
+    document.getElementById("resetCountdown").addEventListener("click", function () {
+      clearInterval(countdownInterval);
+      countdownRunning = false;
+      countdownTimeLeft = 0;
+      document.getElementById("countdownDisplay").innerText = "00:00";
+      document.getElementById("countdownMinutes").value = "";
+      document.getElementById("countdownSeconds").value = "";
+    });
+  </script>
+</body>
+</html>
